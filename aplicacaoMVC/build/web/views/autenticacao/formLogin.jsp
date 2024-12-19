@@ -37,7 +37,7 @@
                             <input type="submit" value="Enviar" class="btn btn-primary">  
                         </div>
                         <div class="col-sm-6">                                
-                            <h6>Não possui acesso <a href="/aplicacaoMVC/RegistrarController">Registre-se aqui</a></h6>
+                            <h6>Não possui acesso? <a href="/aplicacaoMVC/RegistrarController">Registre-se aqui!</a></h6>
                         </div>
                 </form>
             </div>

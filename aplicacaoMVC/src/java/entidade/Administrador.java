@@ -1,3 +1,4 @@
+/*Criado por Oliver Almeida*/
 package entidade;
 
 public class Administrador {

@@ -149,5 +149,34 @@ public class AdministradorDAO {
             conexao.closeConexao();
         }
     }
+    
+    /*Criado por Oliver */
+    public void criarAdminDefault() throws Exception {
+        Conexao conexao = new Conexao();
+        try {
+            // Verifica se o adm já existe no sistema
+            String queryCheck = "SELECT COUNT(*) AS total FROM administradores WHERE cpf = ?";
+            PreparedStatement checkStmt = conexao.getConexao().prepareStatement(queryCheck);
+            checkStmt.setString(1, "249.252.810-38");
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            
+            if (rs.getInt("total") == 0) {
+                // Insere o adm no bd
+                String queryInsert = "INSERT INTO administradores (nome, cpf, senha) VALUES (?, ?, ?)";
+                PreparedStatement insertStmt = conexao.getConexao().prepareStatement(queryInsert);
+                insertStmt.setString(1, "Adm padrão");
+                insertStmt.setString(2, "249.252.810-38");
+                insertStmt.setString(3, "111");
+                insertStmt.executeUpdate();
+                System.out.println("Administrador cadastrado.");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Query de select (get) incorreta");
+        } finally {
+            conexao.closeConexao();
+        }
+    }
 
 }

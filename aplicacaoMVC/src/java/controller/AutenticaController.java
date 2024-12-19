@@ -17,7 +17,7 @@ import model.AdministradorDAO;
  */
 @WebServlet(name = "AutenticaController", urlPatterns = {"/AutenticaController"})
 public class AutenticaController extends HttpServlet {
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class AutenticaController extends HttpServlet {
             rd.forward(request, response);
 
         } else {
-            /*if(cpf_user.equals("249.252.810-38") && senha_user.equals("111")){//editado*/
+            if(cpf_user.equals("249.252.810-38") && senha_user.equals("111")){ /* Linha descomentada por Oliver*/
             Administrador administradorObtido;
             Administrador administrador = new Administrador(cpf_user, senha_user);
             AdministradorDAO AdministradorDAO = new AdministradorDAO();
@@ -68,6 +68,17 @@ public class AutenticaController extends HttpServlet {
 
             }
         }
+    }
+    
+    /*Criado por Oliver */
+    @Override
+    public void init(); { /*Por algum motivo oculto, talvez bruxaria, essa linha fica como incorreta*/
+        try {
+            AdministradorDAO administradorDAO = new AdministradorDAO();
+            administradorDAO.criarAdminDefault();
+        } catch (Exception e) {
+            System.out.println("Erro ao criar administrador padrão: " + e.getMessage());
+        } 
     }
 
 }

@@ -39,5 +39,17 @@ public class RegistrarController extends HttpServlet {
         rd.forward(request, response);
 
     }
+    
+    protected void doPut ()
+            throws ServletException, IOException {
 
+
+    }
+    
+    protected void doDelete ()
+            throws ServletException, IOException {
+            
+                 
+    }
+    
 }
