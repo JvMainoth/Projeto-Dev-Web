@@ -18,6 +18,8 @@ import model.AdministradorDAO;
 @WebServlet(name = "AutenticaController", urlPatterns = {"/AutenticaController"})
 public class AutenticaController extends HttpServlet {
     
+    
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,12 +45,12 @@ public class AutenticaController extends HttpServlet {
             rd.forward(request, response);
 
         } else {
-            if(cpf_user.equals("249.252.810-38") && senha_user.equals("111")){ /* Linha descomentada por Oliver*/
+            if(cpf_user.equals("249.252.810-38") && senha_user.equals("111")){
             Administrador administradorObtido;
             Administrador administrador = new Administrador(cpf_user, senha_user);
-            AdministradorDAO AdministradorDAO = new AdministradorDAO();
+            AdministradorDAO administradorDAO = new AdministradorDAO();
             try {
-                administradorObtido = AdministradorDAO.Logar(administrador);
+                administradorObtido = administradorDAO.Logar(administrador);
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
                 throw new RuntimeException("Falha na query para Logar");
@@ -65,14 +67,14 @@ public class AutenticaController extends HttpServlet {
                 request.setAttribute("msgError", "Usuário e/ou senha incorreto");
                 rd = request.getRequestDispatcher("/views/autenticacao/formLogin.jsp");
                 rd.forward(request, response);
-
+                }
             }
         }
     }
     
     /*Criado por Oliver */
     @Override
-    public void init(); { /*Por algum motivo oculto, talvez bruxaria, essa linha fica como incorreta*/
+    public void init() { 
         try {
             AdministradorDAO administradorDAO = new AdministradorDAO();
             administradorDAO.criarAdminDefault();
@@ -80,5 +82,6 @@ public class AutenticaController extends HttpServlet {
             System.out.println("Erro ao criar administrador padrão: " + e.getMessage());
         } 
     }
-
 }
+
+/*Tem algo estranho nesse código, quando enviamos o formualário do login somos redirecionados para uma tela em branco, preciso investigar*/
