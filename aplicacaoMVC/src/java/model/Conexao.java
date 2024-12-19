@@ -11,10 +11,13 @@ public class Conexao {
                 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); //load driver  
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbjava", "root", "123456");
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/escola", "root", "123456");
+            System.out.println("Conexão com o banco de dados estabelecida com sucesso!");
         } catch (SQLException e) {
+            System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage());
             throw new RuntimeException("Nao foi possivel efetuar uma conexao com o BD!"+ e.getMessage());
         } catch (ClassNotFoundException e) {
+            System.err.println("Driver do banco de dados não encontrado: " + e.getMessage());
             throw new RuntimeException("Nao foi possivel encontrar a classe referente! Verifique o driver!"+ e.getMessage());
         }
     }

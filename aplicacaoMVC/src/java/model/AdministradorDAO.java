@@ -155,28 +155,40 @@ public class AdministradorDAO {
         Conexao conexao = new Conexao();
         try {
             // Verifica se o adm já existe no sistema
-            String queryCheck = "SELECT COUNT(*) AS total FROM administradores WHERE cpf = ?";
+            String queryCheck = "SELECT COUNT(*) AS total FROM administrador WHERE cpf = ?";
             PreparedStatement checkStmt = conexao.getConexao().prepareStatement(queryCheck);
             checkStmt.setString(1, "249.252.810-38");
             ResultSet rs = checkStmt.executeQuery();
             rs.next();
+            System.out.println("Conectado ao banco: " + conexao.getConexao().getCatalog());
+            System.out.println(rs.getInt("total"));
             
             if (rs.getInt("total") == 0) {
                 // Insere o adm no bd
-                String queryInsert = "INSERT INTO administradores (nome, cpf, senha) VALUES (?, ?, ?)";
+                System.out.println("Inserindo administrador padrão...");
+                String queryInsert = "INSERT INTO administrador (nome, cpf, senha, aprovado, endereco) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement insertStmt = conexao.getConexao().prepareStatement(queryInsert);
                 insertStmt.setString(1, "Adm padrão");
                 insertStmt.setString(2, "249.252.810-38");
                 insertStmt.setString(3, "111");
-                insertStmt.executeUpdate();
+                insertStmt.setString(4, "1");
+                insertStmt.setString(5, "Rua");
                 System.out.println("Administrador cadastrado.");
+                int rowsAffected = insertStmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Administrador cadastrado com sucesso.");
+                } else {
+                    System.err.println("Nenhuma linha foi inserida.");
+                }
+            } else {
+            System.out.println("Administrador já cadastrado no sistema.");
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException("Query de select (get) incorreta");
+            System.err.println("Erro ao criar administrador padrão: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao executar consulta SQL.");
         } finally {
             conexao.closeConexao();
         }
     }
-
 }
