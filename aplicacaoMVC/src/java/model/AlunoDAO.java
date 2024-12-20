@@ -31,6 +31,35 @@ public class AlunoDAO {
             conexao.closeConexao();
         }
     }
+    public Aluno getAluno(int id) throws Exception {
+        Conexao conexao = new Conexao();
+        try {
+            Aluno Aluno = new Aluno();
+            PreparedStatement sql = conexao.getConexao().prepareStatement("SELECT * FROM alunos WHERE ID = ? ");
+            sql.setInt(1, id);
+            ResultSet resultado = sql.executeQuery();
+            if (resultado != null) {
+                while (resultado.next()) {
+                    Aluno.setId(Integer.parseInt(resultado.getString("ID")));
+                    Aluno.setNome(resultado.getString("NOME"));
+                    Aluno.setCpf(resultado.getString("CPF"));
+                    Aluno.setEndereco(resultado.getString("ENDERECO"));
+                    Aluno.setSenha(resultado.getString("SENHA"));
+                    Aluno.setEmail(resultado.getString("EMAIL"));
+                    Aluno.setCelular(resultado.getString("CELULAR"));
+                    Aluno.setCidade(resultado.getString("CIDADE"));
+                    Aluno.setBairro(resultado.getString("BAIRRO"));
+                    Aluno.setCep(resultado.getString("CEP"));
+                }
+            }
+            return Aluno;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Query de select (get) incorreta");
+        } finally {
+            conexao.closeConexao();
+        }
+    }
     
     public ArrayList<Aluno> listarAlunos() throws SQLException {
     ArrayList<Aluno> alunos = new ArrayList<>();
