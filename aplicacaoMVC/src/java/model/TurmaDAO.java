@@ -4,6 +4,8 @@ package model;
 import entidade.Turma;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.ResultSet;
 
 public class TurmaDAO {
     public void inserir(Turma Turma) throws Exception {

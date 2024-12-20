@@ -63,4 +63,42 @@ public class AlunoDAO {
         }
         return alunos;
     }
+    
+    /*Criado por Oliver Almeida*/
+    public void alterar(Aluno Aluno) throws Exception {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement("UPDATE alunos SET nome = ?, email = ?, celular = ?, cpf = ?, senha = ?, endereco = ?, cidade = ?, bairro = ?, cep = ? WHERE ID = ? ");
+            sql.setString(1, Aluno.getNome());
+            sql.setString(2, Aluno.getEmail());
+            sql.setString(3, Aluno.getCelular());
+            sql.setString(4, Aluno.getCpf());
+            sql.setString(5, Aluno.getSenha());
+            sql.setString(6, Aluno.getEndereco());
+            sql.setString(7, Aluno.getCidade());
+            sql.setString(8, Aluno.getBairro());
+            sql.setString(9, Aluno.getCep());
+            sql.setInt(10, Aluno.getId());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Query de update (alterar) incorreta");
+        } finally {
+            conexao.closeConexao();
+        }
+    }
+    
+    public void excluir(Aluno Aluno) throws Exception {
+        Conexao conexao = new Conexao();
+        try {
+            PreparedStatement sql = conexao.getConexao().prepareStatement("DELETE FROM alunos WHERE ID = ? ");
+            sql.setInt(1, Aluno.getId());
+            sql.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Query de delete (excluir) incorreta");
+        } finally {
+            conexao.closeConexao();
+        }
+    }
 }

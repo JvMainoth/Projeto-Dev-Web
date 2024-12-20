@@ -67,8 +67,8 @@
                     
                     <!-- Seleção de Disciplina -->
                     <div class="mb-3">
-                        <label for="professor" class="form-label">Escolha uma Disciplina:</label>
-                        <select id="professor" name="idProfessor" class="form-select">
+                        <label for="disciplina" class="form-label">Escolha uma Disciplina:</label>
+                        <select id="disciplina" name="idDisciplina" class="form-select">
                             <option value="" disabled selected>Selecione uma disciplina</option>
                             <%
                                 try {
@@ -91,8 +91,8 @@
                     
                     <!-- Seleção de Aluno -->
                     <div class="mb-3">
-                        <label for="professor" class="form-label">Escolha um Aluno:</label>
-                        <select id="professor" name="idProfessor" class="form-select">
+                        <label for="aluno" class="form-label">Escolha um Aluno:</label>
+                        <select id="aluno" name="idAluno" class="form-select">
                             <option value="" disabled selected>Selecione um aluno</option>
                             <%
                                 try {

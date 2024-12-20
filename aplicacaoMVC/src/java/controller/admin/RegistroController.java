@@ -13,6 +13,9 @@ import model.AdministradorDAO;
 import entidade.Disciplina;
 import model.DisciplinaDAO;
 
+import entidade.Turma;
+import model.TurmaDAO;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -198,6 +201,37 @@ public class RegistroController extends HttpServlet {
             try {
                 // Registra a disciplina no banco de dados
                 disciplinaDAO.inserir(disciplina);
+
+                // Define mensagem de sucesso
+                request.setAttribute("msgSuccess", "disciplina cadastrado com sucesso!");
+            } catch (Exception e) {
+                // Define mensagem de erro
+                request.setAttribute("msgError", "Erro ao cadastrar disciplina: " + e.getMessage());
+            }
+
+            // Redireciona para a página de menu ou feedback
+            RequestDispatcher rd = request.getRequestDispatcher("/views/admin/registro/menuRegistro.jsp");
+            rd.forward(request, response);
+            
+        } else if ("cadastrarTurma".equals(action)) {
+            String codigo = request.getParameter("codigo");
+            int professor = Integer.parseInt(request.getParameter("idProfessor"));
+            int disciplina = Integer.parseInt(request.getParameter("idDisciplina"));
+            int aluno = Integer.parseInt(request.getParameter("idAluno"));
+            int nota = Integer.parseInt(request.getParameter("nota"));
+            
+            Turma turma = new Turma();
+            turma.setCodigo(codigo);
+            turma.setProfessor_id(professor);
+            turma.setDisciplina_id(disciplina);
+            turma.setAluno_id(aluno);
+            turma.setNota(nota);
+            
+            TurmaDAO turmaDAO = new TurmaDAO();
+            /*Rever essas exceções e casos*/
+            try {
+                // Registra a disciplina no banco de dados
+                turmaDAO.inserir(turma);
 
                 // Define mensagem de sucesso
                 request.setAttribute("msgSuccess", "disciplina cadastrado com sucesso!");
