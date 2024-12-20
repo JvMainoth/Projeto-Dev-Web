@@ -1,4 +1,4 @@
-//
+
 package controller.admin;
 
 import entidade.Aluno;
@@ -26,7 +26,7 @@ public class ListaController extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         
-        String page; // Página para redirecionar
+        String page = null; // Página para redirecionar
         if (action == null || action.isEmpty()) {
             // Menu principal se nenhum parâmetro for enviado
             page = "/views/admin/categoria/menuListas.jsp";
@@ -44,7 +44,7 @@ public class ListaController extends HttpServlet {
                     
 
                 case "professores":
-                    page = "/views/admin/registro/formProfessor.jsp";
+                    page = "/admin/ProfessorController?acao=Listar";
                     /*ProfessorDAO professorDAO = new ProfessorDAO();
                     ArrayList<Professor> listaProfessores = professorDAO.getAll();
                     request.setAttribute("listaProfessores", listaProfessores);
@@ -53,7 +53,7 @@ public class ListaController extends HttpServlet {
                     break;
 
                 case "administradores":
-                    page = "/views/admin/registro/formAdministrador.jsp";
+                    page = "/admin/AdministradorController?acao=Listar";
                     /*AdministradorDAO administradorDAO = new AdministradorDAO();
                     ArrayList<Administrador> listaAdministradores = administradorDAO.getAll();
                     request.setAttribute("listaAdministradores", listaAdministradores);
@@ -62,12 +62,16 @@ public class ListaController extends HttpServlet {
                     break;
 
                 case "disciplinas":
-                    page = "/views/admin/registro/formDisciplina.jsp";
-                   /* DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+                    page = "/admin/DisciplinaController?acao=Listar";
+                    /* DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
                     ArrayList<Disciplina> listaDisciplinas = disciplinaDAO.getAll();
                     request.setAttribute("listaDisciplinas", listaDisciplinas);
                     rd = request.getRequestDispatcher("/views/admin/listaDisciplinas.jsp");
                     rd.forward(request, response);*/
+                    break;
+                
+                case "turmas":
+                    page = "/admin/TurmaController?acao=Listar";
                     break;
 
                 default:

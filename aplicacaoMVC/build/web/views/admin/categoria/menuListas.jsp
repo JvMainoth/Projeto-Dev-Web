@@ -16,17 +16,20 @@
                 <h3>Menu de Listagem</h3>
                 <h4>Escolha o tipo de entidade para listar</h4>
                 <div class="row mt-4">
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/ListaController?action=alunos" class="btn btn-primary btn-block">Listar Alunos</a>
+                    <div class="col-md-2">
+                        <a href="<%= request.getContextPath() %>/admin/ListaController?action=alunos" class="btn btn-primary btn-block">Listar Alunos</a>
                     </div>
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/ListaController?action=professores" class="btn btn-success btn-block">Listar Professores</a>
+                    <div class="col-md-2">
+                        <a href="<%= request.getContextPath() %>/admin/ListaController?action=professores" class="btn btn-success btn-block">Listar Professores</a>
                     </div>
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/ListaController?action=administradores" class="btn btn-warning btn-block">Listar Administradores</a>
+                    <div class="col-md-2">
+                        <a href="<%= request.getContextPath() %>/admin/ListaController?action=administradores" class="btn btn-warning btn-block">Listar Administradores</a>
                     </div>
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/ListaController?action=disciplinas" class="btn btn-info btn-block">Listar Disciplinas</a>
+                    <div class="col-md-2">
+                        <a href="<%= request.getContextPath() %>/admin/ListaController?action=disciplinas" class="btn btn-info btn-block">Listar Disciplinas</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="<%= request.getContextPath() %>/admin/ListaController?action=turmas" class="btn btn-danger btn-block">Listar Turmas</a>
                     </div>
                 </div>
             </div>

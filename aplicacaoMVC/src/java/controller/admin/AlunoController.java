@@ -1,3 +1,4 @@
+/*Feito por João Mainoth e Oliver Almeida*/
 package controller.admin;
 
 import entidade.Aluno;
@@ -21,155 +22,130 @@ public class AlunoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String acao = request.getParameter("acao");
-        Aluno aluno = new Aluno();
-        AlunoDAO alunoDAO = new AlunoDAO();
-        RequestDispatcher rd;
-
-        switch (acao) {
-            case "Listar":
-                ArrayList<Aluno> listaAlunos = null;
-            try {
-                listaAlunos = alunoDAO.listarAlunos();
-            } catch (SQLException ex) {
-                Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            String acao = request.getParameter("acao");
+            AlunoDAO alunoDAO = new AlunoDAO();
+            RequestDispatcher rd;
+            
+            switch (acao) {
+                case "Listar":
+                    ArrayList<Aluno> listaAlunos = null;
+                    try {
+                        listaAlunos = alunoDAO.listarAlunos();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    request.setAttribute("listaAlunos", listaAlunos);
+                    rd = request.getRequestDispatcher("/views/admin/categoria/listaAlunos.jsp");
+                    rd.forward(request, response);
+                    break;
+                    
+                case "Alterar":
+                    int idAlterar = Integer.parseInt(request.getParameter("id"));
+                    Aluno alunoAlterar = null;
+                    try {
+                        alunoAlterar = alunoDAO.getAluno(idAlterar);
+                    } catch (Exception ex) {
+                        Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    request.setAttribute("aluno", alunoAlterar);
+                    rd = request.getRequestDispatcher("/views/admin/edicao/formAluno.jsp");
+                    rd.forward(request, response);
+                    break;
+                    
+                case "Excluir":
+                    int idExcluir = Integer.parseInt(request.getParameter("id"));
+                    try {
+                        Aluno aluno = alunoDAO.getAluno(idExcluir); // Recupera o aluno
+                        alunoDAO.excluir(aluno); // Exclui o aluno
+                        request.setAttribute("msgSuccess", "Aluno excluído com sucesso!");
+                    } catch (Exception e) {
+                        request.setAttribute("msgError", "Erro ao excluir aluno: " + e.getMessage());
+                    }
+                    // Após a exclusão, redireciona para a lista de alunos
+                    listaAlunos = alunoDAO.listarAlunos();
+                    request.setAttribute("listaAlunos", listaAlunos);
+                    rd = request.getRequestDispatcher("/views/admin/categoria/listaAlunos.jsp");
+                    rd.forward(request, response);
+                    break;
+                    
+                case "Incluir":
+                    Aluno alunoIncluir = new Aluno();
+                    request.setAttribute("aluno", alunoIncluir);
+                    request.setAttribute("msgError", "");
+                    request.setAttribute("acao", acao);
+                    rd = request.getRequestDispatcher("/views/admin/registro/formAluno.jsp");
+                    rd.forward(request, response);
+                    break;
+                    
+                default:
+                    response.sendRedirect("/aplicacaoMVC/admin/AlunoController?acao=Listar");
+                    break;
             }
-                request.setAttribute("listaAlunos", listaAlunos);
-
-                rd = request.getRequestDispatcher("/views/admin/categoria/listaAlunos.jsp");
-                rd.forward(request, response);
-                break;
-
-
-            case "Alterar":
-            case "Excluir":
-                int id = Integer.parseInt(request.getParameter("id"));
-            {
-                try {
-                    aluno = alunoDAO.getAluno(id);
-                } catch (Exception ex) {
-                    Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-                request.setAttribute("aluno", aluno);
-                request.setAttribute("msgError", "");
-                request.setAttribute("acao", acao);
-
-                rd = request.getRequestDispatcher("/views/admin/registro/formAluno.jsp");
-                rd.forward(request, response);
-                break;
-
-
-            case "Incluir":
-                request.setAttribute("aluno", aluno);
-                request.setAttribute("msgError", "");
-                request.setAttribute("acao", acao);
-
-                rd = request.getRequestDispatcher("/views/admin/registro/formAluno.jsp");
-                rd.forward(request, response);
-                break;
-
-            default:
-                response.sendRedirect("/aplicacaoMVC/admin/AlunoController?acao=Listar");
-                break;
+        } catch (SQLException ex) {
+            Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @Override //avaliar esta parte
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getParameter("action");
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        String nome = request.getParameter("nome");
-        String email = request.getParameter("email");
-        String celular = request.getParameter("celular");
-        String cpf = request.getParameter("cpf");
-        String senha = request.getParameter("senha");
-        String endereco = request.getParameter("endereco");
-        String cidade = request.getParameter("cidade");
-        String bairro = request.getParameter("bairro");
-        String cep = request.getParameter("cep");
-        String btEnviar = request.getParameter("btEnviar");
+        if ("editarAluno".equals(action)) {
+            // Recupera os dados do formulário
+            int id = Integer.parseInt(request.getParameter("id"));
+            String nome = request.getParameter("nome");
+            String email = request.getParameter("email");
+            String celular = request.getParameter("celular");
+            String cpf = request.getParameter("cpf");
+            String senha = request.getParameter("senha");
+            String endereco = request.getParameter("endereco");
+            String cidade = request.getParameter("cidade");
+            String bairro = request.getParameter("bairro");
+            String cep = request.getParameter("cep");
 
-        RequestDispatcher rd;
-
-        if (nome.isEmpty() || email.isEmpty()) {
+            // Cria o objeto Aluno
             Aluno aluno = new Aluno();
-            if (btEnviar.equals("Alterar") || btEnviar.equals("Excluir")) {
-                try {
-                    AlunoDAO alunoDAO = new AlunoDAO();
-                    aluno = alunoDAO.getAluno(id);
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                    throw new RuntimeException("Erro ao buscar dados do aluno.");
-                }
-            }
+            aluno.setId(id);
+            aluno.setNome(nome);
+            aluno.setEmail(email);
+            aluno.setCelular(celular);
+            aluno.setCpf(cpf);
+            aluno.setSenha(senha);
+            aluno.setEndereco(endereco);
+            aluno.setCidade(cidade);
+            aluno.setBairro(bairro);
+            aluno.setCep(cep);
 
-            request.setAttribute("aluno", aluno);
-            request.setAttribute("acao", btEnviar);
-            request.setAttribute("msgError", "É necessário preencher todos os campos");
-
-            rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
-            rd.forward(request, response);
-
-        } else {
-            Aluno aluno = new Aluno(nome, email, celular, cpf, senha, endereco, cidade, bairro, cep);
             AlunoDAO alunoDAO = new AlunoDAO();
-
             try {
-                switch (btEnviar) {
-                    case "Incluir":
-                        try{
-                            alunoDAO.inserir(aluno);
-                            request.setAttribute("msgOperacaoRealizada", "Inclusão realizada com sucesso");
-                        }catch(Exception ex){
-                            System.out.println("Erro ao incluir aluno: " + ex.getMessage());  
-                            request.setAttribute("msgError", "Erro ao incluir o aluno. Tente novamente.");
-                            request.setAttribute("aluno", aluno);
-                            rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
-                            rd.forward(request, response);
-                            return;
-                        }
-                        break;
-
-                    case "Alterar":
-                        try {
-                            alunoDAO.alterar(aluno);
-                            request.setAttribute("msgOperacaoRealizada", "Alteração realizada com sucesso");
-                        } catch (Exception ex) {
-                            System.out.println("Erro ao alterar aluno: " + ex.getMessage());
-                            request.setAttribute("msgError", "Erro ao alterar o aluno. Tente novamente.");
-                            request.setAttribute("aluno", aluno);
-                            rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
-                            rd.forward(request, response);
-                            return;
-                        }
-                        break;
-
-                    case "Excluir":
-                        try {
-                            alunoDAO.excluir(aluno);
-                            request.setAttribute("msgOperacaoRealizada", "Exclusão realizada com sucesso");
-                        } catch (Exception ex) {
-                            System.out.println("Erro ao excluir aluno: " + ex.getMessage());
-                            request.setAttribute("msgError", "Erro ao excluir o aluno. Tente novamente.");
-                            request.setAttribute("aluno", aluno);
-                            rd = request.getRequestDispatcher("/views/admin/aluno/formAluno.jsp");
-                            rd.forward(request, response);
-                            return; // Evitar continuar o fluxo após o erro
-                        }
-                        break;
-                }
-
-                request.setAttribute("link", "/aplicacaoMVC/admin/AlunoController?acao=Listar");
-                rd = request.getRequestDispatcher("/views/comum/showMessage.jsp");
-                rd.forward(request, response);
-
-            } catch (IOException | ServletException ex) {
-                System.out.println(ex.getMessage());
-                throw new RuntimeException("Erro ao executar operação com Aluno.");
+                // Registra o aluno no banco de dados
+                alunoDAO.alterar(aluno);
+                // Define mensagem de sucesso
+                request.setAttribute("msgSuccess", "Aluno editado com sucesso!");
+            } catch (Exception e) {
+                // Define mensagem de erro
+                request.setAttribute("msgError", "Erro ao editar aluno: " + e.getMessage());
             }
+
+            // Redireciona para a página de menu ou feedback
+            RequestDispatcher rd = request.getRequestDispatcher("/views/admin/categoria/menuListas.jsp");
+            rd.forward(request, response);
+        }  else if ("excluirAluno".equals(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            AlunoDAO alunoDAO = new AlunoDAO();
+            try {
+                Aluno aluno = alunoDAO.getAluno(id); // Recupera o aluno
+                alunoDAO.excluir(aluno); // Exclui o aluno
+                request.setAttribute("msgSuccess", "Aluno excluído com sucesso!");
+            } catch (Exception e) {
+                request.setAttribute("msgError", "Erro ao excluir aluno: " + e.getMessage());
+            }
+
+            RequestDispatcher rd = request.getRequestDispatcher("/views/admin/categoria/menuListas.jsp");
+            rd.forward(request, response);
         }
     }
 }
