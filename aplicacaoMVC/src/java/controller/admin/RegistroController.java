@@ -10,6 +10,9 @@ import model.ProfessorDAO;
 import entidade.Administrador;
 import model.AdministradorDAO;
 
+import entidade.Disciplina;
+import model.DisciplinaDAO;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -151,12 +154,14 @@ public class RegistroController extends HttpServlet {
             String nome = request.getParameter("nome");
             String cpf = request.getParameter("cpf");
             String senha = request.getParameter("senha");
+            String aprovado = request.getParameter("aprovado");
             String endereco = request.getParameter("endereco");
             
             Administrador administrador = new Administrador();
             administrador.setNome(nome);
             administrador.setCpf(cpf);
             administrador.setSenha(senha);
+            administrador.setAprovado(aprovado);
             administrador.setEndereco(endereco);
             
             AdministradorDAO administradorDAO = new AdministradorDAO();
@@ -170,6 +175,35 @@ public class RegistroController extends HttpServlet {
             } catch (Exception e) {
                 // Define mensagem de erro
                 request.setAttribute("msgError", "Erro ao cadastrar Administrador: " + e.getMessage());
+            }
+
+            // Redireciona para a página de menu ou feedback
+            RequestDispatcher rd = request.getRequestDispatcher("/views/admin/registro/menuRegistro.jsp");
+            rd.forward(request, response);
+            
+        } else if ("cadastrarDisciplina".equals(action)) {
+            String nome = request.getParameter("nome");
+            String requisito = request.getParameter("requisito");
+            String ementa = request.getParameter("ementa");
+            Short carga_horaria = Short.parseShort(request.getParameter("cargaHoraria"));
+            
+            Disciplina disciplina = new Disciplina();
+            disciplina.setNome(nome);
+            disciplina.setRequisito(requisito);
+            disciplina.setEmenta(ementa);
+            disciplina.setCarga_horaria(carga_horaria);
+            
+            DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+            /*Rever essas exceções e casos*/
+            try {
+                // Registra a disciplina no banco de dados
+                disciplinaDAO.inserir(disciplina);
+
+                // Define mensagem de sucesso
+                request.setAttribute("msgSuccess", "disciplina cadastrado com sucesso!");
+            } catch (Exception e) {
+                // Define mensagem de erro
+                request.setAttribute("msgError", "Erro ao cadastrar disciplina: " + e.getMessage());
             }
 
             // Redireciona para a página de menu ou feedback

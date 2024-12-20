@@ -24,12 +24,13 @@ public class AdministradorDAO {
     public void Inserir(Administrador Administrador) throws Exception {
         Conexao conexao = new Conexao();
         try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement("INSERT INTO Administrador (nome, cpf, endereco, senha)"
-                    + " VALUES (?,?,?,?)");
+            PreparedStatement sql = conexao.getConexao().prepareStatement("INSERT INTO Administrador (nome, cpf, endereco, senha, aprovado)"
+                    + " VALUES (?,?,?,?,?)");
             sql.setString(1, Administrador.getNome());
             sql.setString(2, Administrador.getCpf());
             sql.setString(3, Administrador.getEndereco());
             sql.setString(4, Administrador.getSenha());
+            sql.setString(5, Administrador.getAprovado());
             sql.executeUpdate();
 
         } catch (SQLException e) {
@@ -109,7 +110,8 @@ public class AdministradorDAO {
                     Administrador Administrador = new Administrador(resultado.getString("NOME"),
                             resultado.getString("CPF"),
                             resultado.getString("ENDERECO"),
-                            resultado.getString("SENHA"));
+                            resultado.getString("SENHA"),
+                            resultado.getString("APROVADO"));
                     Administrador.setId(Integer.parseInt(resultado.getString("id")));
                     meusAdministradores.add(Administrador);
                 }

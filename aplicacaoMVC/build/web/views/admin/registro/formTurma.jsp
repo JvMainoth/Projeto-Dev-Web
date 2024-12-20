@@ -1,4 +1,11 @@
-<!--Criado por João Mainoth-->
+<!--Criado por Oliver Almeida-->
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entidade.Professor" %>
+<%@ page import="model.ProfessorDAO" %>
+<%@ page import="entidade.Disciplina" %>
+<%@ page import="model.DisciplinaDAO" %>
+<%@ page import="entidade.Aluno" %>
+<%@ page import="model.AlunoDAO" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -34,19 +41,76 @@
                         <input type="text" id="codigo" name="codigo" class="form-control">
                     </div>
                     
+                    <!-- Seleção de Professor -->
                     <div class="mb-3">
-                        <label for="id_professor" class="form-label">ID do Professor</label>
-                        <input type="text" id="id_professor" name="id_professor" class="form-control">
+                        <label for="professor" class="form-label">Escolha um Professor:</label>
+                        <select id="professor" name="idProfessor" class="form-select">
+                            <option value="" disabled selected>Selecione um professor</option>
+                            <%
+                                try {
+                                    ProfessorDAO professorDAO = new ProfessorDAO();
+                                    ArrayList<Professor> professores = professorDAO.listarProfessores();
+
+                                    for (Professor professor : professores) {
+                            %>
+                            <option value="<%= professor.getId() %>"><%= professor.getNome() %></option>
+                            <%
+                                    }
+                                } catch (Exception e) {
+                            %>
+                            <option value="" disabled>Erro ao carregar professores</option>
+                            <%
+                                }
+                            %>
+                        </select>
                     </div>
                     
+                    <!-- Seleção de Disciplina -->
                     <div class="mb-3">
-                        <label for="id_disciplina" class="form-label">ID da Disciplina</label>
-                        <input type="text" id="id_disciplina" name="id_disciplina" class="form-control">
+                        <label for="professor" class="form-label">Escolha uma Disciplina:</label>
+                        <select id="professor" name="idProfessor" class="form-select">
+                            <option value="" disabled selected>Selecione uma disciplina</option>
+                            <%
+                                try {
+                                    DisciplinaDAO disciplinaDAO = new DisciplinaDAO();
+                                    ArrayList<Disciplina> disciplinas = disciplinaDAO.listarDisciplinas();
+
+                                    for (Disciplina disciplina : disciplinas) {
+                            %>
+                            <option value="<%= disciplina.getId() %>"><%= disciplina.getNome() %></option>
+                            <%
+                                    }
+                                } catch (Exception e) {
+                            %>
+                            <option value="" disabled>Erro ao carregar disciplinas</option>
+                            <%
+                                }
+                            %>
+                        </select>
                     </div>
                     
+                    <!-- Seleção de Aluno -->
                     <div class="mb-3">
-                        <label for="id_aluno" class="form-label">ID do Aluno</label>
-                        <input type="text" id="id_aluno" name="id_aluno" class="form-control">
+                        <label for="professor" class="form-label">Escolha um Aluno:</label>
+                        <select id="professor" name="idProfessor" class="form-select">
+                            <option value="" disabled selected>Selecione um aluno</option>
+                            <%
+                                try {
+                                    AlunoDAO alunoDAO = new AlunoDAO();
+                                    ArrayList<Aluno> alunos = alunoDAO.listarAlunos();
+
+                                    for (Aluno aluno : alunos) {
+                            %>
+                            <option value="<%= aluno.getId() %>"><%= aluno.getNome() %></option>
+                            <%
+                                    }
+                                } catch (Exception e) {
+                            %>
+                            <option value="" disabled>Erro ao carregar alunos</option>
+                            <%
+                                }
+                            %>
+                        </select>
                     </div>
                     
                     <div class="mb-3">

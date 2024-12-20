@@ -5,6 +5,8 @@ package model;
 import entidade.Professor;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.ResultSet;
 
 public class ProfessorDAO {
     public void inserir(Professor Professor) throws Exception {
@@ -25,4 +27,30 @@ public class ProfessorDAO {
             conexao.closeConexao();
         }
     }
+    public ArrayList<Professor> listarProfessores() throws SQLException {
+    ArrayList<Professor> professores = new ArrayList<>();
+    Conexao conexao = new Conexao();
+        try {
+            String selectSQL = "SELECT id, nome, email, cpf, senha FROM professores ORDER BY nome";
+            PreparedStatement preparedStatement;
+            preparedStatement = conexao.getConexao().prepareStatement(selectSQL);
+            ResultSet resultado = preparedStatement.executeQuery();
+            if (resultado != null) {
+                while (resultado.next()) {
+                    Professor professor = new Professor(resultado.getString("NOME"),
+                            resultado.getString("EMAIL"),
+                            resultado.getString("CPF"),
+                            resultado.getString("SENHA"));
+                    professor.setId(Integer.parseInt(resultado.getString("ID")));
+                    professores.add(professor);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Query de select (ListaDeProfessores) incorreta");
+        } finally {
+            conexao.closeConexao();
+        }
+        return professores;
+    }
+    
 }

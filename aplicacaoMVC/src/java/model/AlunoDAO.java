@@ -4,6 +4,8 @@ package model;
 import entidade.Aluno;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.ResultSet;
 
 public class AlunoDAO {
     public void inserir(Aluno Aluno) throws Exception {
@@ -28,5 +30,37 @@ public class AlunoDAO {
         } finally {
             conexao.closeConexao();
         }
+    }
+    
+    public ArrayList<Aluno> listarAlunos() throws SQLException {
+    ArrayList<Aluno> alunos = new ArrayList<>();
+    Conexao conexao = new Conexao();
+        try {
+            String selectSQL = "SELECT * FROM alunos ORDER BY nome";
+            PreparedStatement preparedStatement;
+            preparedStatement = conexao.getConexao().prepareStatement(selectSQL);
+            ResultSet resultado = preparedStatement.executeQuery();
+            if (resultado != null) {
+                while (resultado.next()) {
+                    Aluno aluno = new Aluno(
+                            resultado.getString("NOME"),
+                            resultado.getString("EMAIL"),
+                            resultado.getString("CELULAR"),
+                            resultado.getString("CPF"),
+                            resultado.getString("SENHA"),
+                            resultado.getString("ENDERECO"),
+                            resultado.getString("CIDADE"),
+                            resultado.getString("BAIRRO"),
+                            resultado.getString("CEP"));
+                    aluno.setId(Integer.parseInt(resultado.getString("ID")));
+                    alunos.add(aluno);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Query de select (ListaDeDisciplinas) incorreta");
+        } finally {
+            conexao.closeConexao();
+        }
+        return alunos;
     }
 }

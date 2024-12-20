@@ -48,8 +48,8 @@
                         <label for="aprovado" class="form-label">Aprovado</label>
                         <select id="aprovado" name="aprovado" class="form-select" required>
                             <option value="">Selecione...</option>
-                            <option value="sim">Sim</option>
-                            <option value="nao">Não</option>
+                            <option value="s">Sim</option>
+                            <option value="n">Não</option>
                         </select>
                     </div>
                     
