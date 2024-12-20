@@ -50,6 +50,9 @@ public class RegistroController extends HttpServlet {
                 case "disciplinas":
                     page = "/views/admin/registro/formDisciplina.jsp";
                     break;
+                case "turmas":
+                    page = "/views/admin/registro/formTurma.jsp";
+                    break;
                 default:
                     // Página de erro ou menu como fallback
                     page = "/views/admin/registro/menuRegistro.jsp";

@@ -17,17 +17,20 @@
                 <h3>Menu de Registro</h3>
                 <h4>Escolha o tipo de registro desejado</h4>
                 <div class="row mt-4">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <a href="<%= request.getContextPath() %>/admin/RegistroController?action=alunos" class="btn btn-primary btn-block">Registrar Alunos</a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <a href="<%= request.getContextPath() %>/admin/RegistroController?action=professores" class="btn btn-success btn-block">Registrar Professores</a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <a href="<%= request.getContextPath() %>/admin/RegistroController?action=administradores" class="btn btn-warning btn-block">Registrar Administradores</a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <a href="<%= request.getContextPath() %>/admin/RegistroController?action=disciplinas" class="btn btn-info btn-block">Registrar Disciplinas</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="<%= request.getContextPath() %>/admin/RegistroController?action=turmas" class="btn btn-danger btn-block">Registrar Turmas</a>
                     </div>
                 </div>
             </div>
