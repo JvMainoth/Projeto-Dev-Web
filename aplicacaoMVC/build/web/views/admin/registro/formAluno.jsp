@@ -7,14 +7,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="#">
-        <title>Registrar Administrador</title>
+        <title>Registrar Aluno</title>
         <link href="../views/bootstrap/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
         <div class="container">
             <jsp:include page="../../comum/menu.jsp" />
             <div class="col-sm-6 offset-3 mt-5">
-                <h3>Registro de Administrador</h3>
+                <h3>Registro de Aluno</h3>
 
                 <!-- Mensagem de erro -->
                 <%
@@ -27,7 +27,7 @@
                 <% } %>
 
                 <!-- Formulário -->
-                <form action="${pageContext.request.contextPath}/admin/RegistroController" method="POST">
+                <form action="<%= request.getContextPath() %>/admin/RegistroController" method="POST">
                     <input type="hidden" name="action" value="cadastrarAluno">
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome</label>

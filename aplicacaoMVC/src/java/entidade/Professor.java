@@ -1,33 +1,29 @@
+/*Criado por Oliver Almeida*/
 package entidade;
 
-public class Administrador {
-
+public class Professor {
     private int id;
     private String nome;
+    private String email;
     private String cpf;
-    private String endereco;
     private String senha;
 
-    public Administrador(String nome, String cpf, String endereco, String senha) {
+
+    public Professor(String nome, String email, String cpf, String senha) {
         this.nome = nome;
-        this.cpf = cpf;
-        this.endereco = endereco;
-        this.senha = senha;
-    }
-
-    public Administrador(String cpf, String senha) {
+        this.email = email;
         this.cpf = cpf;
         this.senha = senha;
     }
-
-    public Administrador() {
+    
+    public Professor() {
         this.id = 0;
         this.nome = "";
+        this.email = "";
         this.cpf = "";
-        this.endereco = "";
         this.senha = "";
     }
-
+    
     public int getId() {
         return id;
     }
@@ -44,20 +40,20 @@ public class Administrador {
         this.nome = nome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getCpf() {
         return cpf;
     }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
 
     public String getSenha() {
@@ -67,5 +63,4 @@ public class Administrador {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
 }

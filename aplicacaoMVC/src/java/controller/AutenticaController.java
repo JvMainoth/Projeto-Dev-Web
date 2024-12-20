@@ -46,9 +46,9 @@ public class AutenticaController extends HttpServlet {
 
         } else {
             if(cpf_user.equals("249.252.810-38") && senha_user.equals("111")){
-            Administrador administradorObtido;
-            Administrador administrador = new Administrador(cpf_user, senha_user);
-            AdministradorDAO administradorDAO = new AdministradorDAO();
+                Administrador administradorObtido;
+                Administrador administrador = new Administrador(cpf_user, senha_user);
+                AdministradorDAO administradorDAO = new AdministradorDAO();
             try {
                 administradorObtido = administradorDAO.Logar(administrador);
             } catch (Exception ex) {
@@ -83,5 +83,3 @@ public class AutenticaController extends HttpServlet {
         } 
     }
 }
-
-/*Tem algo estranho nesse código, quando enviamos o formualário do login somos redirecionados para uma tela em branco, preciso investigar*/

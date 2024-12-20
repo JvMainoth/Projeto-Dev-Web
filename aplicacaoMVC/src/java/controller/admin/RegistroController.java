@@ -1,8 +1,14 @@
-/*Criado por João Mainoth*/
+/*Criado por João Mainoth e Oliver Almeida*/
 package controller.admin;
 
 import entidade.Aluno;
 import model.AlunoDAO;
+
+import entidade.Professor;
+import model.ProfessorDAO;
+
+import entidade.Administrador;
+import model.AdministradorDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -103,6 +109,70 @@ public class RegistroController extends HttpServlet {
             // Redireciona para a página de menu ou feedback
             RequestDispatcher rd = request.getRequestDispatcher("/views/admin/registro/menuRegistro.jsp");
             rd.forward(request, response);
+            
+        } else if ("cadastrarProfessor".equals(action)) {
+            // Recupera os dados do formulário
+            String nome = request.getParameter("nome");
+            String email = request.getParameter("email");
+            String cpf = request.getParameter("cpf");
+            String senha = request.getParameter("senha");
+            
+            // Cria o objeto Professor
+            Professor professor = new Professor();
+            professor.setNome(nome);
+            professor.setEmail(email);
+            professor.setCpf(cpf);
+            professor.setSenha(senha);
+            
+            ProfessorDAO professorDAO = new ProfessorDAO();
+            /*Rever essas exceções e casos*/
+            try {
+                // Registra o professor no banco de dados
+                professorDAO.inserir(professor);
+
+                // Define mensagem de sucesso
+                request.setAttribute("msgSuccess", "Professor cadastrado com sucesso!");
+            } catch (Exception e) {
+                // Define mensagem de erro
+                request.setAttribute("msgError", "Erro ao cadastrar Professor: " + e.getMessage());
+            }
+
+            // Redireciona para a página de menu ou feedback
+            RequestDispatcher rd = request.getRequestDispatcher("/views/admin/registro/menuRegistro.jsp");
+            rd.forward(request, response);
+            
+        } else if ("cadastrarAdministrador".equals(action)) {
+            // Recupera os dados do formulário
+            
+            // Não recupera se o administrador é aprovado ou não -> resolver isso
+            String nome = request.getParameter("nome");
+            String cpf = request.getParameter("cpf");
+            String senha = request.getParameter("senha");
+            String endereco = request.getParameter("endereco");
+            
+            Administrador administrador = new Administrador();
+            administrador.setNome(nome);
+            administrador.setCpf(cpf);
+            administrador.setSenha(senha);
+            administrador.setEndereco(endereco);
+            
+            AdministradorDAO administradorDAO = new AdministradorDAO();
+            /*Rever essas exceções e casos*/
+            try {
+                // Registra o administrador no banco de dados
+                administradorDAO.Inserir(administrador);
+
+                // Define mensagem de sucesso
+                request.setAttribute("msgSuccess", "administrador cadastrado com sucesso!");
+            } catch (Exception e) {
+                // Define mensagem de erro
+                request.setAttribute("msgError", "Erro ao cadastrar Administrador: " + e.getMessage());
+            }
+
+            // Redireciona para a página de menu ou feedback
+            RequestDispatcher rd = request.getRequestDispatcher("/views/admin/registro/menuRegistro.jsp");
+            rd.forward(request, response);
+            
         } else {
             // Caso nenhuma ação seja correspondente, redireciona para o menu
             response.sendRedirect(request.getContextPath() + "/views/admin/registro/menuRegistro.jsp");

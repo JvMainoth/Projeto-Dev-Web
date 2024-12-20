@@ -26,7 +26,8 @@
                 <% } %>
 
                 <!-- Formulário -->
-                <form action="${pageContext.request.contextPath}/admin/RegistroController?action=professores" method="POST">
+                <form action="<%= request.getContextPath() %>/admin/RegistroController" method="POST">
+                    <input type="hidden" name="action" value="cadastrarProfessor">
                     <!-- Nome -->
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome</label>

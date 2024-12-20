@@ -18,16 +18,16 @@
                 <h4>Escolha o tipo de registro desejado</h4>
                 <div class="row mt-4">
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/RegistroController?action=alunos" class="btn btn-primary btn-block">Registrar Alunos</a>
+                        <a href="<%= request.getContextPath() %>/admin/RegistroController?action=alunos" class="btn btn-primary btn-block">Registrar Alunos</a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/RegistroController?action=professores" class="btn btn-success btn-block">Registrar Professores</a>
+                        <a href="<%= request.getContextPath() %>/admin/RegistroController?action=professores" class="btn btn-success btn-block">Registrar Professores</a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/RegistroController?action=administradores" class="btn btn-warning btn-block">Registrar Administradores</a>
+                        <a href="<%= request.getContextPath() %>/admin/RegistroController?action=administradores" class="btn btn-warning btn-block">Registrar Administradores</a>
                     </div>
                     <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/RegistroController?action=disciplinas" class="btn btn-info btn-block">Registrar Disciplinas</a>
+                        <a href="<%= request.getContextPath() %>/admin/RegistroController?action=disciplinas" class="btn btn-info btn-block">Registrar Disciplinas</a>
                     </div>
                 </div>
             </div>

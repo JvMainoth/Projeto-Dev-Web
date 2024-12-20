@@ -171,7 +171,7 @@ public class AdministradorDAO {
                 insertStmt.setString(1, "Adm padrão");
                 insertStmt.setString(2, "249.252.810-38");
                 insertStmt.setString(3, "111");
-                insertStmt.setString(4, "1");
+                insertStmt.setString(4, "s");
                 insertStmt.setString(5, "Rua");
                 System.out.println("Administrador cadastrado.");
                 int rowsAffected = insertStmt.executeUpdate();

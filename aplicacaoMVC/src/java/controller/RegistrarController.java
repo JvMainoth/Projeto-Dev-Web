@@ -23,7 +23,7 @@ public class RegistrarController extends HttpServlet {
             throws ServletException, IOException {
 
         RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/views/registro/formRegistro.jsp");
+        rd = request.getRequestDispatcher("/views/registro/menuRegistro.jsp");
         rd.forward(request, response);
 
     }
