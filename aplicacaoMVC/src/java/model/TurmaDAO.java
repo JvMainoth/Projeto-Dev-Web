@@ -1,6 +1,8 @@
 /*Criado por Oliver Almeida*/
 package model;
 
+import entidade.Professor;
+import entidade.Disciplina;
 import entidade.Turma;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -27,6 +29,7 @@ public class TurmaDAO {
             conexao.closeConexao();
         }
     }
+    
     public Turma getTurma(int id) throws Exception {
         Conexao conexao = new Conexao();
         try {
@@ -113,5 +116,24 @@ public class TurmaDAO {
         } finally {
             conexao.closeConexao();
         }
+    }
+    
+    public ArrayList<Turma> TurmasPorCod() {
+    ArrayList<Turma> turma = new ArrayList<>();
+    Conexao conexao = new Conexao();
+    try {
+        String selectSQL = "SELECT turmas.codigo_turma, disciplina.nome as nome_disciplina, professores.nome as nome_professor FROM Turmas JOIN  professores ON turmas.professor_id = professores.id JOIN disciplina ON turmas.disciplina_id = disciplina.id GROUP BY codigo_turma, nome_disciplina, nome_professor";
+        PreparedStatement preparedStatement = conexao.getConexao().prepareStatement(selectSQL);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            Turma turma = new Turma();
+            turma.setCodigo(resultSet.getString("codigo_turma"));
+            turma.setDisciplina_id(new Disciplina(resultSet.getString("nome_disciplina")));
+            turma.setProfessor_id(new Professor(resultSet.getString("nome_professor")));
+            turma.add(turma);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
 }
