@@ -1,4 +1,4 @@
-/*Criado por Oliver Almeida*/
+/*Criado por Oliver Almeida e João Mainoth*/
 package model;
 
 import entidade.Turma;
@@ -12,7 +12,7 @@ public class TurmaDAO {
         Conexao conexao = new Conexao();
         try {
             PreparedStatement stmt = conexao.getConexao().prepareStatement(
-                "INSERT INTO turmas (codigo_turma, professor_id, disciplina_id, aluno_id, nota)" + "VALUES (?, ?, ?, ?, ?)"
+                "INSERT INTO turmas (professor_id, disciplina_id, aluno_id, codigo_turma, nota)" + "VALUES (?, ?, ?, ?, ?)"
             );
             stmt.setString(1, Turma.getCodigo());
             stmt.setInt(2, Turma.getProfessor_id());

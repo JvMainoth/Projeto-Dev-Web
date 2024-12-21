@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.TurmaDAO;
 
-@WebServlet(name = "AlunoController", urlPatterns = {"/admin/AlunoController"})
-public class AlunoController extends HttpServlet {
+@WebServlet(name = "TurmaController", urlPatterns = {"/admin/TurmaController"})
+public class TurmaController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,14 +24,14 @@ public class AlunoController extends HttpServlet {
 
         try {
             String acao = request.getParameter("acao");
-            AlunoDAO alunoDAO = new AlunoDAO();
+            TurmaDAO alunoDAO = new TurmaDAO();
             RequestDispatcher rd;
             
             switch (acao) {
                 case "Listar":
-                    ArrayList<Aluno> listaAlunos = null;
+                    ArrayList<Turma> listaAlunos = null;
                     try {
-                        listaAlunos = alunoDAO.listarAlunos();
+                        listaAlunos = alunoDAO.listarTurmas();
                     } catch (SQLException ex) {
                         Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
                     }
