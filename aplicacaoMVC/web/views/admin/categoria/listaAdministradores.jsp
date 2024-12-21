@@ -1,4 +1,4 @@
-<%@page import="entidade.Disciplina"%>
+<%@page import="entidade.Administrador"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
@@ -9,7 +9,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="#">
-        <title>Lista de Disciplinas</title>
+        <title>Lista de Administradores</title>
         <link href="http://localhost:8080/aplicacaoMVC/views/bootstrap/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
@@ -17,38 +17,40 @@
             <jsp:include page="../../comum/menu.jsp" />
             <div class="mt-5">
                 <h1>Área Restrita</h1>
-                <h2>Lista de Disciplinas</h2>
+                <h2>Lista de Administradores</h2>
 
-                <a href="/aplicacaoMVC/admin/DisciplinaController?acao=Incluir" class="mb-2 btn btn-primary">Incluir</a>
+                <a href="/aplicacaoMVC/admin/AdministradorController?acao=Incluir" class="mb-2 btn btn-primary">Incluir</a>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">Id</th>
                                 <th scope="col">Nome</th>
-                                <th scope="col">Requisito</th>
-                                <th scope="col">Ementa</th>
-                                <th scope="col">Carga Horária</th>
+                                <th scope="col">Cpf</th>
+                                <th scope="col">Senha</th>
+                                <th scope="col">Aprovado</th>
+                                <th scope="col">Endereco</th>
                                 <th scope="col">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <%
                                 // Obtem a lista de alunos do atributo definido pelo controller
-                                ArrayList<Disciplina> listaDisciplinas = (ArrayList<Disciplina>) request.getAttribute("listaDisciplinas");
-                                
-                                for (Disciplina disciplina : listaDisciplinas) {
+                                ArrayList<Administrador> listaAdministradores = (ArrayList<Administrador>) request.getAttribute("listaDeAdministrador");
+
+                                for (Administrador administrador : listaAdministradores) {
                                     out.println("<tr>");
-                                    out.println("<th>" + disciplina.getId() + "</th>");
-                                    out.println("<td>" + disciplina.getNome() + "</td>");
-                                    out.println("<td>" + disciplina.getRequisito() + "</td>");
-                                    out.println("<td>" + disciplina.getEmenta() + "</td>");
-                                    out.println("<td>" + disciplina.getCarga_horaria() + "</td>");
+                                    out.println("<th>" + administrador.getId() + "</th>");
+                                    out.println("<td>" + administrador.getNome() + "</td>");
+                                    out.println("<td>" + administrador.getCpf() + "</td>");
+                                    out.println("<td>" + administrador.getSenha() + "</td>");
+                                    out.println("<td>" + administrador.getAprovado() + "</td>");
+                                    out.println("<td>" + administrador.getEndereco() + "</td>");
                                     
                                     %>
                             <td>
-                                <a href="/aplicacaoMVC/admin/DisciplinaController?acao=Alterar&id=<%=disciplina.getId()%>" class="btn btn-warning">Alterar</a>
-                                <a href="/aplicacaoMVC/admin/DisciplinaController?acao=Excluir&id=<%=disciplina.getId()%>" class="btn btn-danger">Excluir</a>
+                                <a href="/aplicacaoMVC/admin/AdministradorController?acao=Alterar&id=<%=administrador.getId()%>" class="btn btn-warning">Alterar</a>
+                                <a href="/aplicacaoMVC/admin/AdministradorController?acao=Excluir&id=<%=administrador.getId()%>" class="btn btn-danger">Excluir</a>
                             </td>
                             <%
                                     out.println("</tr>");

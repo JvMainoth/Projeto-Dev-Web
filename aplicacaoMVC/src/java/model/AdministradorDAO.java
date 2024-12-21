@@ -68,12 +68,13 @@ public class AdministradorDAO {
     public void Alterar(Administrador Administrador) throws Exception {
         Conexao conexao = new Conexao();
         try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement("UPDATE Administrador SET nome = ?, cpf = ?, endereco = ?, senha = ?  WHERE ID = ? ");
+            PreparedStatement sql = conexao.getConexao().prepareStatement("UPDATE administrador SET nome = ?, cpf = ?, endereco = ?, senha = ?, aprovado = ?  WHERE ID = ? ");
             sql.setString(1, Administrador.getNome());
             sql.setString(2, Administrador.getCpf());
             sql.setString(3, Administrador.getEndereco());
             sql.setString(4, Administrador.getSenha());
-            sql.setInt(5, Administrador.getId());
+            sql.setString(5, Administrador.getAprovado());
+            sql.setInt(6, Administrador.getId());
             sql.executeUpdate();
 
         } catch (SQLException e) {
