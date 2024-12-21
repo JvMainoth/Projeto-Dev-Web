@@ -27,7 +27,7 @@
                 <% } %>
 
                 <!-- Formulário -->
-                <form action="<%= request.getContextPath() %>/admin/RegistroController" method="POST">
+                <form action="<%= request.getContextPath() %>/admin/AdministradorController" method="POST">
                     <input type="hidden" name="action" value="editarAdministrador">
                     <% Administrador administrador = (Administrador) request.getAttribute("administrador"); %>
                     <input type="hidden" name="id" value="<%= administrador.getId() %>">

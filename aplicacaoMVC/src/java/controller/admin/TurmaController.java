@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.TurmaDAO;
 
-@WebServlet(name = "AlunoController", urlPatterns = {"/admin/AlunoController"})
-public class AlunoController extends HttpServlet {
+@WebServlet(name = "TurmaController", urlPatterns = {"/admin/TurmaController"})
+public class TurmaController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,66 +24,66 @@ public class AlunoController extends HttpServlet {
 
         try {
             String acao = request.getParameter("acao");
-            AlunoDAO alunoDAO = new AlunoDAO();
+            TurmaDAO turmaDAO = new TurmaDAO();
             RequestDispatcher rd;
             
             switch (acao) {
                 case "Listar":
-                    ArrayList<Aluno> listaAlunos = null;
+                    ArrayList<Turma> listaTurmas = null;
                     try {
-                        listaAlunos = alunoDAO.listarAlunos();
+                        listaTurmas = turmaDAO.listarTurmas();
                     } catch (SQLException ex) {
-                        Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(TurmaController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    request.setAttribute("listaAlunos", listaAlunos);
-                    rd = request.getRequestDispatcher("/views/admin/categoria/listaAlunos.jsp");
+                    request.setAttribute("listaTurmas", listaTurmas);
+                    rd = request.getRequestDispatcher("/views/admin/categoria/listaTurmas.jsp");
                     rd.forward(request, response);
                     break;
                     
                 case "Alterar":
                     int idAlterar = Integer.parseInt(request.getParameter("id"));
-                    Aluno alunoAlterar = null;
+                    Turma turmaAlterar = null;
                     try {
-                        alunoAlterar = alunoDAO.getAluno(idAlterar);
+                        turmaAlterar = turmaDAO.getTurma(idAlterar);
                     } catch (Exception ex) {
-                        Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(TurmaController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    request.setAttribute("aluno", alunoAlterar);
-                    rd = request.getRequestDispatcher("/views/admin/edicao/formAluno.jsp");
+                    request.setAttribute("turma", turmaAlterar);
+                    rd = request.getRequestDispatcher("/views/admin/edicao/formTurmas.jsp");
                     rd.forward(request, response);
                     break;
                     
                 case "Excluir":
                     int idExcluir = Integer.parseInt(request.getParameter("id"));
                     try {
-                        Aluno aluno = alunoDAO.getAluno(idExcluir); // Recupera o aluno
-                        alunoDAO.excluir(aluno); // Exclui o aluno
-                        request.setAttribute("msgSuccess", "Aluno excluído com sucesso!");
+                        Turma turma = turmaDAO.getTurma(idExcluir); // Recupera o aluno
+                        turmaDAO.excluir(turma); // Exclui o aluno
+                        request.setAttribute("msgSuccess", "turma excluído com sucesso!");
                     } catch (Exception e) {
-                        request.setAttribute("msgError", "Erro ao excluir aluno: " + e.getMessage());
+                        request.setAttribute("msgError", "Erro ao excluir turma: " + e.getMessage());
                     }
                     // Após a exclusão, redireciona para a lista de alunos
-                    listaAlunos = alunoDAO.listarAlunos();
-                    request.setAttribute("listaAlunos", listaAlunos);
-                    rd = request.getRequestDispatcher("/views/admin/categoria/listaAlunos.jsp");
+                    listaTurmas = turmaDAO.listarTurmas();
+                    request.setAttribute("listaTurmas", listaTurmas);
+                    rd = request.getRequestDispatcher("/views/admin/categoria/listaTurmas.jsp");
                     rd.forward(request, response);
                     break;
                     
                 case "Incluir":
-                    Aluno alunoIncluir = new Aluno();
-                    request.setAttribute("aluno", alunoIncluir);
+                    Turma turmaIncluir = new Turma();
+                    request.setAttribute("aluno", turmaIncluir);
                     request.setAttribute("msgError", "");
                     request.setAttribute("acao", acao);
-                    rd = request.getRequestDispatcher("/views/admin/registro/formAluno.jsp");
+                    rd = request.getRequestDispatcher("/views/admin/registro/formTurmas.jsp");
                     rd.forward(request, response);
                     break;
                     
                 default:
-                    response.sendRedirect("/aplicacaoMVC/admin/AlunoController?acao=Listar");
+                    response.sendRedirect("/aplicacaoMVC/admin/TurmaController?acao=Listar");
                     break;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(AlunoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TurmaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -92,56 +92,48 @@ public class AlunoController extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        if ("editarAluno".equals(action)) {
+        if ("editarTurma".equals(action)) {
             // Recupera os dados do formulário
             int id = Integer.parseInt(request.getParameter("id"));
-            String nome = request.getParameter("nome");
-            String email = request.getParameter("email");
-            String celular = request.getParameter("celular");
-            String cpf = request.getParameter("cpf");
-            String senha = request.getParameter("senha");
-            String endereco = request.getParameter("endereco");
-            String cidade = request.getParameter("cidade");
-            String bairro = request.getParameter("bairro");
-            String cep = request.getParameter("cep");
+            int professor_id = Integer.parseInt(request.getParameter("professor_id"));
+            int disciplina_id = Integer.parseInt(request.getParameter("disciplina_id"));
+            int aluno_id = Integer.parseInt(request.getParameter("aluno_id"));
+            String codigo_turma = request.getParameter("codigo_turma");
+            int nota = Integer.parseInt(request.getParameter("nota"));
 
-            // Cria o objeto Aluno
-            Aluno aluno = new Aluno();
-            aluno.setId(id);
-            aluno.setNome(nome);
-            aluno.setEmail(email);
-            aluno.setCelular(celular);
-            aluno.setCpf(cpf);
-            aluno.setSenha(senha);
-            aluno.setEndereco(endereco);
-            aluno.setCidade(cidade);
-            aluno.setBairro(bairro);
-            aluno.setCep(cep);
+            // Cria o objeto Turma
+            Turma turma = new Turma();
+            turma.setId(id);
+            turma.setProfessor_id(professor_id);
+            turma.setDisciplina_id(disciplina_id);
+            turma.setAluno_id(aluno_id);
+            turma.setCodigo(codigo_turma);
+            turma.setNota(nota);
 
-            AlunoDAO alunoDAO = new AlunoDAO();
+            TurmaDAO turmaDAO = new TurmaDAO();
             try {
                 // Registra o aluno no banco de dados
-                alunoDAO.alterar(aluno);
+                turmaDAO.alterar(turma);
                 // Define mensagem de sucesso
-                request.setAttribute("msgSuccess", "Aluno editado com sucesso!");
+                request.setAttribute("msgSuccess", "Turma editada com sucesso!");
             } catch (Exception e) {
                 // Define mensagem de erro
-                request.setAttribute("msgError", "Erro ao editar aluno: " + e.getMessage());
+                request.setAttribute("msgError", "Erro ao editar turma: " + e.getMessage());
             }
 
             // Redireciona para a página de menu ou feedback
             RequestDispatcher rd = request.getRequestDispatcher("/views/admin/categoria/menuListas.jsp");
             rd.forward(request, response);
-        }  else if ("excluirAluno".equals(action)) {
+        }  else if ("excluirTurma".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
 
-            AlunoDAO alunoDAO = new AlunoDAO();
+            TurmaDAO turmaDAO = new TurmaDAO();
             try {
-                Aluno aluno = alunoDAO.getAluno(id); // Recupera o aluno
-                alunoDAO.excluir(aluno); // Exclui o aluno
-                request.setAttribute("msgSuccess", "Aluno excluído com sucesso!");
+                Turma turma = turmaDAO.getTurma(id); // Recupera o aluno
+                turmaDAO.excluir(turma); // Exclui o aluno
+                request.setAttribute("msgSuccess", "Turma excluída com sucesso!");
             } catch (Exception e) {
-                request.setAttribute("msgError", "Erro ao excluir aluno: " + e.getMessage());
+                request.setAttribute("msgError", "Erro ao excluir turma: " + e.getMessage());
             }
 
             RequestDispatcher rd = request.getRequestDispatcher("/views/admin/categoria/menuListas.jsp");
