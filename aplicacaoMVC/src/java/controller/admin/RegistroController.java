@@ -214,17 +214,18 @@ public class RegistroController extends HttpServlet {
             rd.forward(request, response);
             
         } else if ("cadastrarTurma".equals(action)) {
-            String codigo = request.getParameter("codigo");
+            
             int professor = Integer.parseInt(request.getParameter("idProfessor"));
             int disciplina = Integer.parseInt(request.getParameter("idDisciplina"));
             int aluno = Integer.parseInt(request.getParameter("idAluno"));
+            String codigo = request.getParameter("codigo");
             int nota = Integer.parseInt(request.getParameter("nota"));
             
             Turma turma = new Turma();
-            turma.setCodigo(codigo);
             turma.setProfessor_id(professor);
             turma.setDisciplina_id(disciplina);
             turma.setAluno_id(aluno);
+            turma.setCodigo(codigo);
             turma.setNota(nota);
             
             TurmaDAO turmaDAO = new TurmaDAO();
