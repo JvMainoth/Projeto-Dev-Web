@@ -11,7 +11,7 @@ public class Conexao {
                 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); //load driver  
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/escola", "root", "123456");
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbjava?useUnicode=true&characterEncoding=UTF-8", "root", "123456");
             System.out.println("Conexão com o banco de dados estabelecida com sucesso!");
         } catch (SQLException e) {
             System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage());

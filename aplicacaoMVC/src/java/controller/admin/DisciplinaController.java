@@ -64,7 +64,7 @@ public class DisciplinaController extends HttpServlet {
                     }
                     // Após a exclusão, redireciona para a lista de alunos
                     listaDisciplinas = disciplinaDAO.listarDisciplinas();
-                    request.setAttribute("listaAlunos", listaDisciplinas);
+                    request.setAttribute("listaDisciplinas", listaDisciplinas);
                     rd = request.getRequestDispatcher("/views/admin/categoria/listaDisciplinas.jsp");
                     rd.forward(request, response);
                     break;
