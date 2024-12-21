@@ -58,11 +58,11 @@ public class Turma {
         this.aluno_id = aluno_id;
     }
 
-    public String getCodigo_turma() {
+    public String getCodigo() {
         return codigo_turma;
     }
 
-    public void setCodigo_turma(String codigo_turma) {
+    public void setCodigo(String codigo_turma) {
         this.codigo_turma = codigo_turma;
     }
 
