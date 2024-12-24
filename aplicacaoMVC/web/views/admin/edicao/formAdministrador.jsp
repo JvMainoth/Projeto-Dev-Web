@@ -71,5 +71,5 @@
                             <input type="submit" value="Salvar" class="btn btn-primary">
                         </div>
                         <div class="col-sm-2">
-                            <a href="<%= request.getContextPath() %>/admin/RegistroController?acao=Listar" class="btn btn-danger">Cancelar</a>
+                            <a href="<%= request.getContextPath() %>/admin/AdministradorController?acao=Listar" class="btn btn-danger">Cancelar</a>
                         </

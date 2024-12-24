@@ -8,7 +8,7 @@ public class Administrador {
     private String senha;
     private String aprovado;
 
-    public Administrador(String nome, String cpf, String endereco, String senh, String aprovado) {
+    public Administrador(String nome, String cpf, String endereco, String senha, String aprovado) {
         this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;

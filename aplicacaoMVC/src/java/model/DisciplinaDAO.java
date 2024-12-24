@@ -86,6 +86,7 @@ public class DisciplinaDAO {
             sql.setString(2, Disciplina.getRequisito());
             sql.setString(3, Disciplina.getEmenta());
             sql.setShort(4, Disciplina.getCarga_horaria());
+            sql.setInt(5, Disciplina.getId());
             sql.executeUpdate();
 
         } catch (SQLException e) {

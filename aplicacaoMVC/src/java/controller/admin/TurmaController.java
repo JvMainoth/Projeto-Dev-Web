@@ -71,10 +71,10 @@ public class TurmaController extends HttpServlet {
                     
                 case "Incluir":
                     Turma turmaIncluir = new Turma();
-                    request.setAttribute("aluno", turmaIncluir);
+                    request.setAttribute("turma", turmaIncluir);
                     request.setAttribute("msgError", "");
                     request.setAttribute("acao", acao);
-                    rd = request.getRequestDispatcher("/views/admin/registro/formTurmas.jsp");
+                    rd = request.getRequestDispatcher("/views/admin/registro/formTurma.jsp");
                     rd.forward(request, response);
                     break;
                     

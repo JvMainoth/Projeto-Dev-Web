@@ -28,8 +28,8 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Cpf</th>
                                 <th scope="col">Senha</th>
-                                <th scope="col">Aprovado</th>
                                 <th scope="col">Endereco</th>
+                                <th scope="col">Aprovado</th>
                                 <th scope="col">Ações</th>
                             </tr>
                         </thead>

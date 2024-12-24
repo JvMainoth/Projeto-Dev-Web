@@ -68,12 +68,12 @@ public class AdministradorDAO {
     public void Alterar(Administrador Administrador) throws Exception {
         Conexao conexao = new Conexao();
         try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement("UPDATE administrador SET nome = ?, cpf = ?, endereco = ?, senha = ?, aprovado = ?  WHERE ID = ? ");
+            PreparedStatement sql = conexao.getConexao().prepareStatement("UPDATE administrador SET nome = ?, cpf = ?, senha = ?, aprovado = ?, endereco = ?  WHERE ID = ? ");
             sql.setString(1, Administrador.getNome());
             sql.setString(2, Administrador.getCpf());
-            sql.setString(3, Administrador.getEndereco());
-            sql.setString(4, Administrador.getSenha());
-            sql.setString(5, Administrador.getAprovado());
+            sql.setString(3, Administrador.getSenha());
+            sql.setString(4, Administrador.getAprovado());
+            sql.setString(5, Administrador.getEndereco());
             sql.setInt(6, Administrador.getId());
             sql.executeUpdate();
 
@@ -87,7 +87,7 @@ public class AdministradorDAO {
     public void Excluir(Administrador Administrador) throws Exception {
         Conexao conexao = new Conexao();
         try {
-            PreparedStatement sql = conexao.getConexao().prepareStatement("DELETE FROM Administrador WHERE ID = ? ");
+            PreparedStatement sql = conexao.getConexao().prepareStatement("DELETE FROM administrador WHERE ID = ? ");
             sql.setInt(1, Administrador.getId());
             sql.executeUpdate();
 

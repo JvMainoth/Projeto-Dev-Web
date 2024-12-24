@@ -44,12 +44,26 @@ public class AdministradorController extends HttpServlet {
                     break;
 
                 case "Excluir":
-                    int idExcluir = Integer.parseInt(request.getParameter("id"));
+                    /*int idExcluir = Integer.parseInt(request.getParameter("id"));
                     Administrador administradorExcluir = administradorDAO.getAdministrador(idExcluir);
                     administradorDAO.Excluir(administradorExcluir);
                     request.setAttribute("msgSuccess", "Administrador excluído com sucesso!");
                     ArrayList<Administrador> listaAtualizada = administradorDAO.ListaDeAdministrador();
                     request.setAttribute("listaAdministradores", listaAtualizada);
+                    rd = request.getRequestDispatcher("/views/admin/categoria/listaAdministradores.jsp");
+                    rd.forward(request, response);
+                    break;*/
+                    int idExcluir = Integer.parseInt(request.getParameter("id"));
+                    try {
+                        Administrador administrador = administradorDAO.getAdministrador(idExcluir); // Recupera o aluno
+                        administradorDAO.Excluir(administrador); // Exclui o aluno
+                        request.setAttribute("msgSuccess", "Administrador excluído com sucesso!");
+                    } catch (Exception e) {
+                        request.setAttribute("msgError", "Erro ao excluir administrador: " + e.getMessage());
+                    }
+                    // Após a exclusão, redireciona para a lista de alunos
+                    listaAdministradores = administradorDAO.ListaDeAdministrador();
+                    request.setAttribute("listaDeAdministrador", listaAdministradores);
                     rd = request.getRequestDispatcher("/views/admin/categoria/listaAdministradores.jsp");
                     rd.forward(request, response);
                     break;
@@ -76,7 +90,6 @@ public class AdministradorController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        AdministradorDAO administradorDAO = new AdministradorDAO();
 
         if ("editarAdministrador".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -84,6 +97,7 @@ public class AdministradorController extends HttpServlet {
             String cpf = request.getParameter("cpf");
             String endereco = request.getParameter("endereco");
             String senha = request.getParameter("senha");
+            String aprovado = request.getParameter("aprovado");
 
             Administrador administrador = new Administrador();
             administrador.setId(id);
@@ -91,7 +105,9 @@ public class AdministradorController extends HttpServlet {
             administrador.setCpf(cpf);
             administrador.setEndereco(endereco);
             administrador.setSenha(senha);
+            administrador.setAprovado(aprovado);
 
+            AdministradorDAO administradorDAO = new AdministradorDAO();
             try {
                 administradorDAO.Alterar(administrador);
                 request.setAttribute("msgSuccess", "Administrador editado com sucesso!");
@@ -104,7 +120,8 @@ public class AdministradorController extends HttpServlet {
 
         } else if ("excluirAdministrador".equals(action)) {
             int id = Integer.parseInt(request.getParameter("id"));
-
+            
+            AdministradorDAO administradorDAO = new AdministradorDAO();
             try {
                 Administrador administrador = administradorDAO.getAdministrador(id);
                 administradorDAO.Excluir(administrador);

@@ -1,4 +1,4 @@
-/*Criado por Oliver Almeida*/
+/*Criado por Oliver Almeida e João Mainoth*/
 package model;
 
 import entidade.Professor;
@@ -14,12 +14,12 @@ public class TurmaDAO {
         Conexao conexao = new Conexao();
         try {
             PreparedStatement stmt = conexao.getConexao().prepareStatement(
-                "INSERT INTO turmas (codigo_turma, professor_id, disciplina_id, aluno_id, nota)" + "VALUES (?, ?, ?, ?, ?)"
+                "INSERT INTO turmas (professor_id, disciplina_id, aluno_id, codigo_turma, nota)" + "VALUES (?, ?, ?, ?, ?)"
             );
-            stmt.setString(1, Turma.getCodigo());
-            stmt.setInt(2, Turma.getProfessor_id());
-            stmt.setInt(3, Turma.getDisciplina_id());
-            stmt.setInt(4, Turma.getAluno_id());
+            stmt.setInt(1, Turma.getProfessor_id());
+            stmt.setInt(2, Turma.getDisciplina_id());
+            stmt.setInt(3, Turma.getAluno_id());
+            stmt.setString(4, Turma.getCodigo());
             stmt.setInt(5, Turma.getNota());
             stmt.executeUpdate();
 
@@ -68,10 +68,10 @@ public class TurmaDAO {
             if (resultado != null) {
                 while (resultado.next()) {
                     Turma turma = new Turma(
-                            resultado.getString("codigo_turma"),
                             resultado.getInt("professor_id"),
                             resultado.getInt("disciplina_id"),
                             resultado.getInt("aluno_id"),
+                            resultado.getString("codigo_turma"),
                             resultado.getInt("nota"));
                     turma.setId(Integer.parseInt(resultado.getString("ID")));
                     turmas.add(turma);
@@ -118,22 +118,22 @@ public class TurmaDAO {
         }
     }
     
-    public ArrayList<Turma> TurmasPorCod() {
+    /*public ArrayList<Turma> TurmasPorCod() {
     ArrayList<Turma> turma = new ArrayList<>();
     Conexao conexao = new Conexao();
     try {
-        String selectSQL = "SELECT turmas.codigo_turma, disciplina.nome as nome_disciplina, professores.nome as nome_professor FROM Turmas JOIN  professores ON turmas.professor_id = professores.id JOIN disciplina ON turmas.disciplina_id = disciplina.id GROUP BY codigo_turma, nome_disciplina, nome_professor";
-        PreparedStatement preparedStatement = conexao.getConexao().prepareStatement(selectSQL);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        while (resultSet.next()) {
-            Turma turma = new Turma();
-            turma.setCodigo(resultSet.getString("codigo_turma"));
-            turma.setDisciplina_id(new Disciplina(resultSet.getString("nome_disciplina")));
-            turma.setProfessor_id(new Professor(resultSet.getString("nome_professor")));
-            turma.add(turma);
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
+    String selectSQL = "SELECT turmas.codigo_turma, disciplina.nome as nome_disciplina, professores.nome as nome_professor FROM Turmas JOIN  professores ON turmas.professor_id = professores.id JOIN disciplina ON turmas.disciplina_id = disciplina.id GROUP BY codigo_turma, nome_disciplina, nome_professor";
+    PreparedStatement preparedStatement = conexao.getConexao().prepareStatement(selectSQL);
+    ResultSet resultSet = preparedStatement.executeQuery();
+    
+    while (resultSet.next()) {
+    Turma turma = new Turma();
+    turma.setCodigo(resultSet.getString("codigo_turma"));
+    turma.setDisciplina_id(new Disciplina(resultSet.getString("nome_disciplina")));
+    turma.setProfessor_id(new Professor(resultSet.getString("nome_professor")));
+    turma.add(turma);
     }
+    } catch (SQLException e) {
+    e.printStackTrace();
+    }*/
 }
