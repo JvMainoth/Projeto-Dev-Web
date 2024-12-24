@@ -14,10 +14,10 @@
                         Administrador AdministradorLogado = (Administrador) session.getAttribute("administrador");
                         if (AdministradorLogado != null) { %>
                             <a class="nav-link" href="/aplicacaoMVC/admin/dashboard">Dashboard</a>
-                            <a class="nav-link" href="/aplicacaoMVC/admin/ListaController">Categorias</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/ListaController">Listas/Consultas</a>
+                            <a class="nav-link" href="/aplicacaoMVC/admin/RegistroController">Registro</a>
                             <a class="nav-link" href="/aplicacaoMVC/admin/logOut">Logout</a>
                             <!--teste - criando a aba de registro-->
-                            <a class="nav-link" href="/aplicacaoMVC/admin/RegistroController">Registro</a>
                 <%  } else { %>
                 
                             <a class="nav-link" href="/aplicacaoMVC/MostrarComentarios">Coment&aacute;rios</a>
